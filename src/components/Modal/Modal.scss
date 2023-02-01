@@ -1,0 +1,19 @@
+.formContainer {
+    display: flex;
+    gap: 5rem;
+    flex-direction: column;
+
+    > div {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+.containerModal {
+    width: 390px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 4rem
+}
