@@ -4,7 +4,12 @@ import {muiTheme} from "./mui-theme";
 import React from "react";
 import {Outlet} from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
-import ModalProvider from "./contexts/ModalContext/ModalContext";
+import ModalProvider, {ModalContext} from "./contexts/ModalContext/ModalContext";
+import SnackBarProvider from "./contexts/SnackBarContext/SnackBarContext";
+import ModalContainer from "./components/Modal/ModalContainer";
+import UserProvider from "./contexts/UserContext/UserContext";
+
+
 
 function App() {
 
@@ -13,10 +18,15 @@ function App() {
       <CssBaseline/>
         <Container maxWidth={"xl"}>
         <ModalProvider>
-          <NavBar isAuth={false}/>
-          <div className={"outletContainer"}>
-            <Outlet/>
-          </div>
+          <SnackBarProvider>
+            <UserProvider>
+              <NavBar/>
+              <div className={"outletContainer"}>
+                <Outlet/>
+              </div>
+              <ModalContainer/>
+            </UserProvider>
+          </SnackBarProvider>
         </ModalProvider>
         </Container>
     </ThemeProvider>

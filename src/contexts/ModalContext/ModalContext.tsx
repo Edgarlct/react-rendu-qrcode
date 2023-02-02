@@ -1,8 +1,6 @@
-import {createContext, ReactNode} from "react";
+import {createContext, ReactNode, useContext} from "react";
 import React from "react";
 import "./ModalContext.scss";
-import LoginModal from "../../components/Modal/LoginModal";
-import RegisterModal from "../../components/Modal/RegisterModal";
 
 export const ModalContext = createContext({
   open: false,
@@ -10,17 +8,6 @@ export const ModalContext = createContext({
   modalType: "login",
   setModalType: (value: string) => {}
 });
-
-const getModalForm = (modalType: string) => {
-  switch (modalType) {
-    case "login":
-      return <LoginModal/>
-    case "register":
-      return <RegisterModal/>
-    default:
-      return <LoginModal/>
-  }
-}
 
 
 const ModalProvider = (props: {children: ReactNode}) => {
@@ -30,13 +17,6 @@ const ModalProvider = (props: {children: ReactNode}) => {
 
   return (
     <ModalContext.Provider value={value}>
-      {
-        open && <div className={"modalContainer"} onClick={() => setOpen(false)}>
-            <div className={"modalContainerForm"} onClick={(e) => e.stopPropagation()}>
-              { getModalForm(modalType) }
-            </div>
-          </div>
-      }
       {props.children}
     </ModalContext.Provider>
   )
