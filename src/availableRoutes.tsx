@@ -13,5 +13,6 @@ export default function AvailableRoutes() {
                 <Route path="" element={<QrCodeList/>}></Route>
             </Route>
         </Route>
+        <Route path="*" element={<div>404</div>}></Route>
     </Routes>
 }

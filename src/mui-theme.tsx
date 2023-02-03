@@ -44,6 +44,13 @@ export const muiTheme: ThemeOptions = createTheme({
       fontWeight: 400,
       lineHeight: '1.25em',
       fontFamily: "Krona One",
+    },
+    body1: {
+      fontSize: '0.7rem',
+      fontWeight: 300,
+      lineHeight: '1.25em',
+      fontFamily: "Krona One",
+      color: "rgba(50,96,113,0.7)"
     }
   },
   components: {
@@ -133,11 +140,14 @@ export const muiTheme: ThemeOptions = createTheme({
           backgroundColor: '#FFFFFF',
           '&:hover': {
             backgroundColor: '#FFFFFF',
+          },
+          "&.Mui-focused": {
+            backgroundColor: '#FFFFFF',
           }
         },
         input: {
-          paddingTop: "16px",
-          paddingBottom: "16px"
+          paddingTop: "22px",
+          paddingBottom: "22px"
         }
       }
     }

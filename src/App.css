@@ -18,3 +18,7 @@
 .invertIcon {
     transform: rotate(180deg);
 }
+
+.colorSecondary {
+    color: #E39774;
+}

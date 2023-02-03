@@ -6,6 +6,7 @@ import {Api} from "../../api/Api";
 import {SnackBarContext} from "../../contexts/SnackBarContext/SnackBarContext";
 import {ModalContext} from "../../contexts/ModalContext/ModalContext";
 import {UserContext} from "../../contexts/UserContext/UserContext";
+import {useNavigate} from "react-router-dom";
 
 export default function LoginModal() {
   const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ export default function LoginModal() {
   const { setDisplay, setSeverity, setMessage } = useContext(SnackBarContext);
   const {setOpen} = useContext(ModalContext);
   const {setToken} = useContext(UserContext);
+  const navigate = useNavigate();
 
   const submit = async (e:any) => {
     e.preventDefault();
@@ -25,6 +27,7 @@ export default function LoginModal() {
       setSeverity("success");
       setMessage("Connexion réussie");
       setOpen(false);
+      navigate("/qr/code");
     } else {
       setDisplay(true);
       setSeverity("error");
