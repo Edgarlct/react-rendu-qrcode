@@ -51,6 +51,13 @@ export const muiTheme: ThemeOptions = createTheme({
       lineHeight: '1.25em',
       fontFamily: "Krona One",
       color: "rgba(50,96,113,0.7)"
+    },
+    body2: {
+      fontSize: '0.6rem',
+      fontWeight: 300,
+      lineHeight: '1.25em',
+      fontFamily: "Krona One",
+      color: "rgba(50,96,113,0.7)"
     }
   },
   components: {

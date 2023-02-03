@@ -7,13 +7,18 @@ import CustomField from "../../../components/CustomField/CustomField";
 import QrCard from "../../../components/QrCard/QrCard";
 import {Api} from "../../../api/Api";
 import {IQrCode} from "../../../interfaces/IQrCode";
+import dayjs from "dayjs";
+import IStatQr from "../../../interfaces/IStatQr";
 
 export default function QrCodeList() {
-  const [scanASC, setScanASC] = useState(false);
+  const [scanASC, setScanASC] = useState(true);
   const [createASC, setCreateASC] = useState(false);
   const [search, setSearch] = useState("");
   const [qrCodes, setQrCodes] = useState<Array<IQrCode>>([]);
   const [qrCodesFiltered, setQrCodesFiltered] = useState<Array<IQrCode>>([]);
+  const [percentMonth, setPercentMonth] = useState(0);
+  const [percentWeek, setPercentWeek] = useState(0);
+
 
   useEffect(() => {
     handleLoadQrCode();
@@ -21,10 +26,38 @@ export default function QrCodeList() {
 
   const handleLoadQrCode = async () => {
     const qrCodes:IQrCode[] = await Api.get("/api/user/me/qr")
+    calculateStats(qrCodes);
     if (qrCodes) {
       setQrCodes(qrCodes);
       setQrCodesFiltered(qrCodes);
     }
+  }
+
+  const calculateStats = (qrCode:IQrCode[]) => {
+    // first we calculate stats for the current month
+    let countThisMonth = 0;
+    let countLastMonth = 0;
+    let countThisWeek = 0;
+    let countLastWeek = 0;
+    for (const qrCodeEl of qrCode) {
+      if (qrCodeEl.stats) {
+        for (const stat of qrCodeEl.stats) {
+          if (dayjs(stat.createAt).isSame(dayjs(), 'month')) {
+            countThisMonth++;
+          } else if (dayjs(stat.createAt).isSame(dayjs().subtract(1, 'month'), 'month')) {
+            countLastMonth++;
+          }
+          if (dayjs(stat.createAt).isSame(dayjs(), 'week')) {
+            countThisWeek++;
+          } else if (dayjs(stat.createAt).isSame(dayjs().subtract(1, 'week'), 'week')) {
+            countLastWeek++;
+          }
+        }
+      }
+    }
+    console.log((countThisMonth - countLastMonth) / countLastMonth * 100)
+    setPercentMonth(Math.round((countThisMonth - countLastMonth) / countLastMonth * 100) || 0);
+    setPercentWeek(Math.round((countThisWeek - countLastWeek) / countLastWeek * 100) || 0);
   }
 
   const handleSearch = (value: string) => {
@@ -45,23 +78,23 @@ export default function QrCodeList() {
       <div className={"leftPartContainer"}>
         <MainCard title={"Généré un qr code "} icon={"qr_code_2"} link={"/qr/code/add"}/>
         <div className={"containerCard stackContainer"}>
-          <CustomButton title={"Nombre de scan"} icon={"expand_less"} activeIcon={"expand_more"}
-                        fullWidth onClick={() => setScanASC(!scanASC)} active={scanASC}/>
-          <CustomButton title={"Date de création"} icon={"expand_less"} activeIcon={"expand_more"}
-                        fullWidth onClick={() => setCreateASC(!createASC)} active={createASC}/>
+          <CustomButton title={"Nombre de scan"} icon={"circle"} activeIcon={"check_circle"}
+                        fullWidth onClick={() => setScanASC(!scanASC)} active={scanASC} disabled={createASC}/>
+          <CustomButton title={"Date de création"} icon={"circle"} activeIcon={"check_circle"}
+                        fullWidth onClick={() => setCreateASC(!createASC)} active={createASC} disabled={scanASC}/>
         </div>
         <div className={"containerCard stackContainer"}>
           <Typography variant={"h4"} color={"secondary"}>Statistique global :</Typography>
           <div className={"statItem"}>
-            <Typography variant={"h5"} color={"primary.dark"}>+12% de scan ce mois</Typography>
+            <Typography variant={"h5"} color={"primary.dark"}>{percentMonth >= 0 ? "+"+percentMonth : percentMonth}% de scan ce mois</Typography>
             <IconButton size={"medium"}>
-              <span className="material-symbols-outlined mediumIcon">arrow_outward</span>
+              <span className={`material-symbols-outlined mediumIcon ${percentMonth < 0 && 'invertIcon'}`}>arrow_outward</span>
             </IconButton>
           </div>
           <div className={"statItem"}>
-            <Typography variant={"h5"} color={"primary.dark"}>-5% de scan cette semaine</Typography>
+            <Typography variant={"h5"} color={"primary.dark"}>{percentWeek >= 0 ? "+"+percentWeek : percentWeek}% de scan cette semaine</Typography>
             <IconButton size={"medium"}>
-              <span className="material-symbols-outlined mediumIcon invertIcon">
+              <span className={`material-symbols-outlined mediumIcon ${percentWeek < 0 && 'invertIcon'}`}>
                 arrow_outward
               </span>
             </IconButton>
@@ -72,9 +105,19 @@ export default function QrCodeList() {
         <CustomField label={"recherche"} type={"text"} icon={"search"} onChange={(value) => handleSearch(value)} value={search} fullWidth filled/>
         <div className={"containerQrCardList"}>
           {
-            qrCodesFiltered.map((qrCode, index) => {
-              return <QrCard key={index} icon={"qr_code_2"} qrCodeData={qrCode}/>
-            })
+            qrCodesFiltered
+              .sort((a:IQrCode, b:IQrCode) => {
+                if (scanASC) {
+                  return a.stats.length > b.stats.length ? -1 : 1;
+                } else if (createASC) {
+                  return dayjs(b.createdAt).isBefore(dayjs(a.createdAt)) ? -1 : 1;
+                } else {
+                  return 0;
+                }
+              })
+              .map((qrCode, index) => {
+                return <QrCard key={index} icon={"qr_code_2"} qrCodeData={qrCode}/>
+              })
           }
         </div>
       </div>

@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.7",
+    "dayjs": "^1.11.7",
     "jspdf": "^2.5.1",
     "qrcode": "^1.5.1",
     "react": "^18.2.0",

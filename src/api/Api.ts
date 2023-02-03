@@ -10,7 +10,7 @@ export class Api {
       },
     });
 
-    return this.handleResponse(response);
+    return this.handleResponse(response, url);
   }
 
   public static async post<T>(url: string, body: any, needAuth = true): Promise<T> {
@@ -22,7 +22,7 @@ export class Api {
       },
       body: JSON.stringify(body),
     });
-    return this.handleResponse(response);
+    return this.handleResponse(response, url);
   }
 
   public static getLink(url: string) {
@@ -37,8 +37,8 @@ export class Api {
     }
   }
 
-  protected static async handleResponse(response: Response) {
-    if (response.status === 401) {
+  protected static async handleResponse(response: Response, url:string) {
+    if (response.status === 401 && !url.includes("login")) {
       localStorage.removeItem('@qr_code:token');
       window.location.href = '/';
     }

@@ -3,5 +3,5 @@ export interface IQrCode {
   name: string;
   url: string;
   stats?: any;
-  date?: string;
+  createdAt?: string;
 }

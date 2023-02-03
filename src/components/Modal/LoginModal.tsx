@@ -31,7 +31,7 @@ export default function LoginModal() {
     } else {
       setDisplay(true);
       setSeverity("error");
-      setMessage("Une erreur est survenue");
+      setMessage("Mauvais identifiants");
     }
   }
 

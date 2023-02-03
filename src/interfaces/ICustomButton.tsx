@@ -6,4 +6,5 @@ export interface ICustomButton {
   active?: boolean,
   activeIcon?: string,
   color?: "primary" | "secondary"
+  disabled?: boolean
 }
