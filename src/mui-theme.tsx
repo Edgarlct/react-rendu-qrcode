@@ -26,6 +26,24 @@ export const muiTheme: ThemeOptions = createTheme({
       fontWeight: 400,
       lineHeight: '1.25em',
       fontFamily: "Krona One",
+    },
+    h3: {
+      fontSize: '1.8rem',
+      fontWeight: 400,
+      lineHeight: '1.25em',
+      fontFamily: "Krona One",
+    },
+    h4: {
+      fontSize: '1.5rem',
+      fontWeight: 400,
+      lineHeight: '1.25em',
+      fontFamily: "Krona One",
+    },
+    h5: {
+      fontSize: '1rem',
+      fontWeight: 400,
+      lineHeight: '1.25em',
+      fontFamily: "Krona One",
     }
   },
   components: {
@@ -46,6 +64,10 @@ export const muiTheme: ThemeOptions = createTheme({
           // if is full width
           '&.MuiButton-fullWidth': {
             width: '100%',
+          },
+          '&.MuiButton-containedSizeLarge': {
+            height: '3.2rem',
+            borderRadius: '1rem',
           }
         },
         contained: {
@@ -72,6 +94,16 @@ export const muiTheme: ThemeOptions = createTheme({
           '&:hover': {
             backgroundColor: '#5C9EAD',
           }
+        },
+        sizeLarge: {
+          height: '6.25rem',
+          width: '6.25rem',
+          borderRadius: '1.875rem',
+        },
+        sizeMedium: {
+          height: '4rem',
+          width: '4rem',
+          borderRadius: '1.25rem',
         }
       }
     },
@@ -90,6 +122,22 @@ export const muiTheme: ThemeOptions = createTheme({
           '&:hover': {
             borderColor: '#5C9EAD !important',
           }
+        }
+      }
+    },
+    MuiFilledInput: {
+      styleOverrides: {
+        root: {
+          borderRadius: '0.625rem',
+          paddingRight: '12px',
+          backgroundColor: '#FFFFFF',
+          '&:hover': {
+            backgroundColor: '#FFFFFF',
+          }
+        },
+        input: {
+          paddingTop: "16px",
+          paddingBottom: "16px"
         }
       }
     }

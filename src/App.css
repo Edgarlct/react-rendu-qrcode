@@ -6,3 +6,15 @@
   /* all screen without nav height */
   min-height: calc(100vh - 88px);
 }
+
+.largeIcon {
+    font-size: 4.25rem;
+}
+
+.mediumIcon {
+    font-size: 2rem;
+}
+
+.invertIcon {
+    transform: rotate(180deg);
+}
