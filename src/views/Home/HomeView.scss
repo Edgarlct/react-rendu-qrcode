@@ -1,0 +1,26 @@
+.homeContainer {
+    min-height: calc(100vh - 88px);
+    display: flex;
+    align-items: center;
+}
+
+.leftSideHome {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.rightSideHome {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: contain;
+    >img {
+        width: 100%;
+    }
+}
