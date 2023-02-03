@@ -18,7 +18,7 @@ export default function LoginModal() {
 
   const submit = async (e:any) => {
     e.preventDefault();
-    if (email.length === 0 && password.length === 0) return;
+    if (email.length === 0 || password.length === 0) return;
     const response: {access_token:string} = await Api.post("api/auth/login", {"email": email, "password": password}, false);
     if (response && response.access_token) {
       localStorage.setItem("@qr_code:token", response.access_token);

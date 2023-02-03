@@ -1,20 +1,43 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import '../QrCode.scss';
 import MainCard from "../../../components/MainCard/MainCard";
 import {Button, IconButton, Typography} from "@mui/material";
 import CustomButton from "../../../components/CustomButton/CustomButton";
 import CustomField from "../../../components/CustomField/CustomField";
 import QrCard from "../../../components/QrCard/QrCard";
+import {Api} from "../../../api/Api";
+import {IQrCode} from "../../../interfaces/IQrCode";
 
 export default function QrCodeList() {
   const [scanASC, setScanASC] = useState(false);
   const [createASC, setCreateASC] = useState(false);
   const [search, setSearch] = useState("");
+  const [qrCodes, setQrCodes] = useState<Array<IQrCode>>([]);
+  const [qrCodesFiltered, setQrCodesFiltered] = useState<Array<IQrCode>>([]);
 
+  useEffect(() => {
+    handleLoadQrCode();
+  }, [])
 
+  const handleLoadQrCode = async () => {
+    const qrCodes:IQrCode[] = await Api.get("/api/user/me/qr")
+    if (qrCodes) {
+      setQrCodes(qrCodes);
+      setQrCodesFiltered(qrCodes);
+    }
+  }
 
   const handleSearch = (value: string) => {
     setSearch(value);
+    if (value.length === 0) {
+      setQrCodesFiltered(qrCodes);
+      return;
+    }
+    // we search in name and url
+    const qrCodesFiltered = qrCodes.filter((qrCode) => {
+      return qrCode.name.toLowerCase().includes(value.toLowerCase()) || qrCode.url.toLowerCase().includes(value.toLowerCase());
+    })
+    setQrCodesFiltered(qrCodesFiltered);
   }
 
   return (
@@ -48,7 +71,11 @@ export default function QrCodeList() {
       <div className={"rightPartContainer"}>
         <CustomField label={"recherche"} type={"text"} icon={"search"} onChange={(value) => handleSearch(value)} value={search} fullWidth filled/>
         <div className={"containerQrCardList"}>
-          <QrCard icon={"qr_code_2"} qrCodeData={{id:1, name:"Site perso", url: "http://localhost:8000", date:"12/12/2022", stats: ["1", "2"]}}/>
+          {
+            qrCodesFiltered.map((qrCode, index) => {
+              return <QrCard key={index} icon={"qr_code_2"} qrCodeData={qrCode}/>
+            })
+          }
         </div>
       </div>
     </div>
