@@ -55,9 +55,8 @@ export default function QrCodeList() {
         }
       }
     }
-    console.log((countThisMonth - countLastMonth) / countLastMonth * 100)
-    setPercentMonth(Math.round((countThisMonth - countLastMonth) / countLastMonth * 100) || 0);
-    setPercentWeek(Math.round((countThisWeek - countLastWeek) / countLastWeek * 100) || 0);
+    setPercentMonth(Math.round(((countThisMonth - countLastMonth) / countLastMonth * 100) !== Infinity ? ((countThisMonth - countLastMonth) / countLastMonth * 100): 0 ) || 0);
+    setPercentWeek(Math.round(((countThisWeek - countLastWeek) / countLastWeek * 100) !== Infinity ? ((countThisWeek - countLastWeek) / countLastWeek * 100): 0 ) || 0);
   }
 
   const handleSearch = (value: string) => {
