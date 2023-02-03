@@ -43,7 +43,7 @@ export default function QrCodeList() {
   return (
     <div className={"containerQrCodeDashboard"}>
       <div className={"leftPartContainer"}>
-        <MainCard title={"Généré un qr code "} icon={"qr_code_2"}/>
+        <MainCard title={"Généré un qr code "} icon={"qr_code_2"} link={"/qr/code/add"}/>
         <div className={"containerCard stackContainer"}>
           <CustomButton title={"Nombre de scan"} icon={"expand_less"} activeIcon={"expand_more"}
                         fullWidth onClick={() => setScanASC(!scanASC)} active={scanASC}/>

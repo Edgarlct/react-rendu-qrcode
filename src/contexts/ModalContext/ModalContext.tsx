@@ -6,14 +6,17 @@ export const ModalContext = createContext({
   open: false,
   setOpen: (value: boolean) => {},
   modalType: "login",
-  setModalType: (value: string) => {}
+  setModalType: (value: string) => {},
+  modalData: {},
+  setModalData: (value: any) => {}
 });
 
 
 const ModalProvider = (props: {children: ReactNode}) => {
   const [open, setOpen] = React.useState(false);
   const [modalType, setModalType] = React.useState("login");
-  const value = {open, setOpen, modalType, setModalType};
+  const [modalData, setModalData] = React.useState<any>({});
+  const value = {open, setOpen, modalType, setModalType, modalData, setModalData};
 
   return (
     <ModalContext.Provider value={value}>

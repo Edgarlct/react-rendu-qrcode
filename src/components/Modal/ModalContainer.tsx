@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
 import {ModalContext} from "../../contexts/ModalContext/ModalContext";
+import QrCodeGenModal from "./QrCodeGenModal";
 
 export default function ModalContainer() {
   const {open, setOpen, modalType} = useContext(ModalContext);
@@ -11,6 +12,8 @@ export default function ModalContainer() {
         return <LoginModal/>
       case "register":
         return <RegisterModal/>
+      case "qrCode":
+        return <QrCodeGenModal/>
       default:
         return <LoginModal/>
     }

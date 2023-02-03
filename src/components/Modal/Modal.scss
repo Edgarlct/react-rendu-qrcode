@@ -37,3 +37,19 @@
     background: #fff;
     border-radius: 20px;
 }
+
+.containerQrData {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+
+    >.containerQr {
+        background-color: #5C9EAD;
+        padding: 2rem;
+        border-radius: 30px;
+    }
+}
+
+

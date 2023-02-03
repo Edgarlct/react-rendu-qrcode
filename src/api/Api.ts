@@ -25,6 +25,10 @@ export class Api {
     return this.handleResponse(response);
   }
 
+  public static getLink(url: string) {
+    return this.checkIfValidUrl(url);
+  }
+
   protected static checkIfValidUrl(url: string) {
     if (url.startsWith('/')) {
       return this.base_url + url.slice(1);
